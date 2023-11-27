@@ -1,20 +1,26 @@
-// Login.js (or any relevant component name)
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
-const Login = () => {
+const Login = ({ setIsLoggedIn }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      // Simulate login by sending data to your backend
       const response = await axios.post('http://localhost:4000/adduser', {
         username,
         password,
       });
-      console.log(response.data); // Assuming the server sends a response
-      // You might want to redirect the user after successful login.
+
+      // If login is successful, update the isLoggedIn state and navigate
+      setIsLoggedIn(true);
+      navigate('/'); // Redirect to the main page
+
+      console.log('Response Data:', response.data);
     } catch (error) {
       console.error('Error:', error);
     }
@@ -43,3 +49,9 @@ const Login = () => {
 };
 
 export default Login;
+
+
+
+
+
+

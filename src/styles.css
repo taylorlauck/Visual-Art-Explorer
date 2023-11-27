@@ -1,0 +1,36 @@
+/* Basic styles for the entire app */
+.App {
+    text-align: center;
+    font-family: Arial, sans-serif;
+    margin-top: 20px;
+  }
+  
+  /* Container for horizontal artworks */
+  .art-container-horizontal {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between; /* Distribute space between items */
+    max-width: 800px; /* Adjust as needed */
+    margin: 0 auto; /* Center the container */
+  }
+  
+  /* Individual art piece */
+  .art-piece-horizontal {
+    width: calc(25% - 20px); /* 25% width for 4 items in a row, considering margins */
+    margin: 10px; /* Adjust margin between items */
+    text-align: center;
+    box-sizing: border-box; /* Include padding and border in width */
+  }
+  
+  .art-piece-horizontal img {
+    width: 100%;
+    height: auto;
+    border: 1px solid #ccc;
+  }
+  
+  .art-piece-horizontal p {
+    margin-top: 5px;
+    font-size: 14px;
+    color: #333;
+  }
+  
