@@ -1,46 +1,42 @@
 //App.js
-import React, { useState } from 'react';
+import React from 'react';
 import { BrowserRouter as Router, Route, Routes, Link, Navigate } from 'react-router-dom';
-import Artworks from './Artworks';
 import Login from './Login';
 import Signup from './Signup';
-import LogoutButton from './LogoutButton';
+import Artworks from './Artworks';
 
 const App = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  const handleLogout = () => {
-    localStorage.removeItem('authToken');
-    setIsLoggedIn(false);
+  const handleSignup = () => {
+    // Logic for handling signup, if needed
+    // For example, setting a flag or updating state
+    console.log('Handling signup...');
   };
+
+
+ const IsLoggedIn = ()  =>{
+
+  console.log('Handling login...');
+ };// Replace this with your logic to determine user login status
 
   return (
     <Router>
       <div>
         <nav>
           <ul>
-          
-            {!isLoggedIn ? (
-              <>
-                <li>
-                  <Link to="/login">Login</Link>
-                </li>
-                <li>
-                  <Link to="/signup">Signup</Link>
-                </li>
-              </>
-            ) : (
-              <li>
-                <LogoutButton handleLogout={handleLogout} />
-              </li>
-            )}
+           
+            <li>
+              <Link to="/login">Login</Link>
+            </li>
+            <li>
+              <Link to="/signup">Signup</Link>
+            </li>
           </ul>
         </nav>
 
         <Routes>
           <Route path="/" element={<Artworks />} />
-          <Route path="/login" element={<Login setIsLoggedIn={setIsLoggedIn} />} />
-          <Route path="/signup" element={<Signup />} />
+          <Route path="/login" element={<Login IsLoggedIn={IsLoggedIn} />} />
+          <Route path="/signup" element={<Signup handleSignup={handleSignup} />} />
         </Routes>
       </div>
     </Router>

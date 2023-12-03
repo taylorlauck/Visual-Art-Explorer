@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
-const Signup = ({ setIsLoggedIn }) => {
+const Signup = ({ handleSignup }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [signupSuccess, setSignupSuccess] = useState(false);
@@ -18,8 +18,8 @@ const Signup = ({ setIsLoggedIn }) => {
       });
 
       if (response.data.success) {
-        setIsLoggedIn(true);
-        setSignupSuccess(true);
+        handleSignup(); // Call the handleSignup function after successful signup
+        setSignupSuccess(true); // Set signup success state to display message
         console.log('Signup successful');
       } else {
         console.log('Signup failed:', response.data);
@@ -30,14 +30,13 @@ const Signup = ({ setIsLoggedIn }) => {
       console.error('Error:', error);
     }
   };
-      
 
   return (
     <div>
       {signupSuccess ? (
         <div>
           <p>Signup successful! Proceed to Artworks</p>
-          <button onClick={() => navigate('/')}>Home</button> 
+          <button onClick={() => navigate('/')}>Home</button>
         </div>
       ) : (
         <div>
