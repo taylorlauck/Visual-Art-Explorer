@@ -1,3 +1,4 @@
+//Login.js
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
@@ -10,15 +11,20 @@ const Login = ({ setIsLoggedIn }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // Simulate login by sending data to your backend
-      const response = await axios.post('http://localhost:4000/adduser', {
+      const response = await axios.post('http://localhost:4000/login', {
         username,
         password,
       });
+     
 
-      // If login is successful, update the isLoggedIn state and navigate
+
+      if (response.status === 200) {
       setIsLoggedIn(true);
-      navigate('/'); // Redirect to the main page
+      navigate('/artworks'); // Redirect to the main page after signup
+      console.log('Login successful');
+    } else {
+      console.log('Login failed:', response.data);
+    }
 
       console.log('Response Data:', response.data);
     } catch (error) {
@@ -49,9 +55,3 @@ const Login = ({ setIsLoggedIn }) => {
 };
 
 export default Login;
-
-
-
-
-
-

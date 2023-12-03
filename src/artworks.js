@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import './styles.css';
+import ArtDetailsModal from './ArtDetailsModal';
 
 const Artworks = () => {
- // const [isLoggedIn] = useState(false); // Assuming this state is managed somewhere else in your app
   const [artworks, setArtworks] = useState([]);
+  const [selectedArtwork, setSelectedArtwork] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -44,8 +45,7 @@ const Artworks = () => {
           return unique.some((a) => a.id === artwork.id) ? unique : [...unique, artwork];
         }, []);
 
-     setArtworks(uniqueArtworks); 
-
+        setArtworks(uniqueArtworks);
       } catch (error) {
         console.error('Error fetching art data:', error);
       }
@@ -54,30 +54,46 @@ const Artworks = () => {
     fetchData();
   }, []);
 
- return (
+  const showArtDetails = (artwork) => {
+    console.log('Selected Artwork:', artwork);
+    setSelectedArtwork(artwork);
+  };
+
+  const closeArtDetails = () => {
+    setSelectedArtwork(null);
+  };
+
+  return (
     <div className="Artworks">
-       
-        <div>
-          <h1>Welcome to the gallery! Click on some art to find out more about it!</h1>
-          <div className="art-container-horizontal">
-            {artworks.map((artwork) => (
-              <div key={artwork.id} className="art-piece-horizontal">
-                <img src={artwork._links.thumbnail.href} alt={artwork.title} />
-                <p>{artwork.title}</p>
-                {/* Add more details or styles as needed */}
-              </div>
-            ))}
-          </div>
+      <div>
+        <h1>Welcome to the gallery! Click on some art to find out more about it!</h1>
+        <div className="art-container-horizontal">
+          {artworks.map((artwork) => (
+            <div key={artwork.id} className="art-piece-horizontal" onClick={() => showArtDetails(artwork)}>
+              <img src={artwork._links.thumbnail.href} alt={artwork.title} />
+              <p>{artwork.title}</p>
+            </div>
+          ))}
         </div>
-       :
-    
-            
+      </div>
+
+      {selectedArtwork && (
+        <ArtDetailsModal
+          artPiece={selectedArtwork}
+          onClose={closeArtDetails}
+          thumbnailUrl={selectedArtwork._links.thumbnail.href} // Pass the thumbnail URL as a prop
+   
+        />
+      )}
     </div>
   );
 };
 
-
 export default Artworks;
+
+
+
+
 
 
 
