@@ -1,24 +1,19 @@
-import React, { useState } from 'react';
-import LogoutButton from './LogoutButton';
+import React from 'react';
 
-const MainComponent = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(true); // For example, if initially logged in
-
+const LogoutButton = ({ setIsLoggedIn }) => {
   const handleLogout = () => {
-    // Clear authentication token, reset user states, and update isLoggedIn to false
-    localStorage.removeItem('authToken');
-   
-    localStorage.removeItem('user');
-    localStorage.removeItem('password');
-    setIsLoggedIn(false);
+    // Perform logout actions, e.g., clearing tokens, session data, etc.
+    // Example:
+    localStorage.removeItem('token');
+    setIsLoggedIn(false); // Update the login status to false upon logout
   };
 
   return (
-    <div>
-      {/* Other components */}
-      {isLoggedIn && <LogoutButton handleLogout={handleLogout} />}
-    </div>
+    <button onClick={handleLogout}>Logout</button>
   );
 };
 
-export default MainComponent;
+export default LogoutButton;
+
+
+
