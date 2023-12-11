@@ -1,23 +1,20 @@
-import React from 'react';
+//ArtDetailsModal.js
 import './ArtDetailsModal.css'; // Import the CSS file
 
-const ArtDetailsModal = ({ artPiece, onClose,thumbnailUrl }) => {
-  if (!artPiece) {
-    return null;
-  }
 
-  const { title, date, dimensions, medium, category, slug, additional_information } = artPiece;
-  
-  //const urlRegex = /(https?:\/\/[^\s]+)/g;
-  //const urls = additional_information.match(urlRegex);
-  //console.log(additional_information); 
-  
-  
+
+const ArtDetailsModal = ({ artPiece, onClose, thumbnailUrl, onFavorite }) => {
+ const { title, date, dimensions, medium, category, slug, additional_information } = artPiece;
+
+ const handleFavorite = () => {
+  onFavorite(artPiece); // Trigger the favorite action passed from the parent component
+};
+
   return (
     <div className="modal">
       <div className="modal-content">
         <span className="close" onClick={onClose}>&times;</span>
-        <img className="modal-image" src={thumbnailUrl} alt={title} /> {/* Display the thumbnail */}
+        <img className="modal-image" src={thumbnailUrl} alt={title} />
         <div className="details">
           <h2>{title}</h2>
           <p>Date: {date}</p>
@@ -26,16 +23,18 @@ const ArtDetailsModal = ({ artPiece, onClose,thumbnailUrl }) => {
           <p>Category: {category}</p>
           <p>Artist: {slug}</p>
           <p>Additional Information: {additional_information}</p>
-         </div>
+          <button className="favorite-button" onClick={handleFavorite}>
+            Favorite
+          </button>
+          </div>
       </div>
     </div>
   );
 };
 
+
 export default ArtDetailsModal;
 
 
   
-
-
 

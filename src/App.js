@@ -4,6 +4,8 @@ import Login from './Login';
 import Signup from './Signup';
 import Artworks from './Artworks';
 import LogoutButton from './LogoutButton'; // Import the LogoutButton component
+import { FavoritesProvider  } from './FavoritesContext';
+import FavoritesPage from './FavoritesPage';
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -14,20 +16,16 @@ const App = () => {
     setIsLoggedIn(false);// Add logic for signup if needed
   };
 
-  //const checkLoginStatus = () => {
-    // Logic to determine user login status
-    // For example, check session data, tokens, or any authentication mechanism
-    // Return true if logged in, false otherwise
-    // Example:
-   // return localStorage.getItem('token') !== null;
-  
+
 
   return (
     <Router>
+       <FavoritesProvider> {/* Wrap entire app with FavoritesProvider */}
       <div>
         <nav>
           <ul>
             {!isLoggedIn ? (
+          
               <>
                 <li>
                   <Link to="/login">Login</Link>
@@ -37,10 +35,15 @@ const App = () => {
                 </li>
               </>
             ) : (
+              <> 
+               <li>
+          <Link to="/favorites">Favorites</Link>
+        </li>
               <li>
                 {/* Render LogoutButton component when logged in */}
                 <LogoutButton setIsLoggedIn={setIsLoggedIn}/>
               </li>
+              </>
             )}
           </ul>
         </nav>
@@ -48,12 +51,13 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Artworks />} />
           <Route path="/signup" element={<Signup handleSignup={handleSignup} />} />
-          <Route
-            path="/login"
-            element={<Login setIsLoggedIn={setIsLoggedIn} />} // Pass setIsLoggedIn as a prop
-          />
+          <Route path="/favorites" element={<FavoritesPage setIsLoggedIn={setIsLoggedIn}/>} />
+          <Route path="/login" element={<Login setIsLoggedIn={setIsLoggedIn} />} /> 
+        
+          
         </Routes>
       </div>
+      </FavoritesProvider>
     </Router>
   );
 };

@@ -1,12 +1,24 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import './styles.css';
 import ArtDetailsModal from './ArtDetailsModal';
+import { FavoritesContext } from './FavoritesContext';
+import { useNavigate } from 'react-router-dom';
+
 
 const Artworks = () => {
   const [artworks, setArtworks] = useState([]);
   const [selectedArtwork, setSelectedArtwork] = useState(null);
 
-  useEffect(() => {
+  const navigate = useNavigate(); // Initialize useNavigate
+  const { addToFavorites } = useContext(FavoritesContext); // Access favorites context action
+
+  const handleFavorite = (artPiece) => {
+    addToFavorites(artPiece); // Add art to favorites using context action
+    navigate('/favorites'); 
+  };
+
+
+   useEffect(() => {
     const fetchData = async () => {
       try {
         const clientId = process.env.REACT_APP_CLIENT_ID;
@@ -82,7 +94,8 @@ const Artworks = () => {
           artPiece={selectedArtwork}
           onClose={closeArtDetails}
           thumbnailUrl={selectedArtwork._links.thumbnail.href} // Pass the thumbnail URL as a prop
-   
+          onFavorite={handleFavorite} // Pass the handleFavorite function
+
         />
       )}
     </div>
