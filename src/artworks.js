@@ -1,21 +1,19 @@
+//Artworks.js
 import React, { useState, useEffect, useContext } from 'react';
 import './styles.css';
 import ArtDetailsModal from './ArtDetailsModal';
-import { FavoritesContext } from './FavoritesContext';
-import { useNavigate } from 'react-router-dom';
 
+//import { useNavigate } from 'react-router-dom';
+import { FavoritesContext } from './FavoritesContext';
 
 const Artworks = () => {
   const [artworks, setArtworks] = useState([]);
   const [selectedArtwork, setSelectedArtwork] = useState(null);
 
-  const navigate = useNavigate(); // Initialize useNavigate
+  //const navigate = useNavigate(); // Initialize useNavigate
   const { addToFavorites } = useContext(FavoritesContext); // Access favorites context action
 
-  const handleFavorite = (artPiece) => {
-    addToFavorites(artPiece); // Add art to favorites using context action
-    navigate('/favorites'); 
-  };
+ 
 
 
    useEffect(() => {
@@ -74,7 +72,10 @@ const Artworks = () => {
   const closeArtDetails = () => {
     setSelectedArtwork(null);
   };
-
+  
+  const handleFavorite = (artPiece) => {
+    addToFavorites(artPiece); // Add art to favorites using context action
+  };
   return (
     <div className="Artworks">
       <div>
@@ -84,6 +85,8 @@ const Artworks = () => {
             <div key={artwork.id} className="art-piece-horizontal" onClick={() => showArtDetails(artwork)}>
               <img src={artwork._links.thumbnail.href} alt={artwork.title} />
               <p>{artwork.title}</p>
+             
+            
             </div>
           ))}
         </div>

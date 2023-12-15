@@ -19,7 +19,10 @@ const Login = ({ setIsLoggedIn }) => {
 
 
       if (response.status === 200) {
-      setIsLoggedIn(true);
+      
+       // localStorage.setItem('token', response.data.token);
+        
+        setIsLoggedIn(true);
       navigate('/'); // Redirect to the main page after signup
       console.log('Login successful');
     } else {
@@ -55,3 +58,5 @@ const Login = ({ setIsLoggedIn }) => {
 };
 
 export default Login;
+
+

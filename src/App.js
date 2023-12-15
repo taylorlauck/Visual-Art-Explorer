@@ -1,3 +1,4 @@
+//app.js
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import Login from './Login';
@@ -12,7 +13,7 @@ const App = () => {
 
   const handleSignup = () => {
     console.log('Handling signup...');
-    localStorage.removeItem('token');
+   
     setIsLoggedIn(false);// Add logic for signup if needed
   };
 
@@ -63,8 +64,3 @@ const App = () => {
 };
 
 export default App;
-
-
-
-
-
