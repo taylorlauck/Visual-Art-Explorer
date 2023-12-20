@@ -1,24 +1,33 @@
-import React, { useContext } from 'react';
+//FavoritesPage.js
+
+import React, { useContext, useEffect } from 'react';
 import { FavoritesContext } from './FavoritesContext';
 
-const FavoritesPage  = () => {
-  const { favorites, removeFromFavorites } = useContext(FavoritesContext); // Access favorites from context
+const FavoritesPage = () => {
+  const { favorites, removeFromFavorites, fetchFavorites } = useContext(FavoritesContext);
 
   const handleUnfavorite = (artPieceId) => {
-    removeFromFavorites(artPieceId); // Call removeFromFavorites function
+    removeFromFavorites(artPieceId);
+    fetchFavorites();
   };
 
-  
+  useEffect(() => {
+    fetchFavorites();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);//fetchFavorites
+
+  // Limit favorites to the first 20 items
+  const limitedFavorites = favorites.slice(0, 20);
+
   return (
     <div>
       <h1>Favorites</h1>
-      {favorites.length === 0 ? (
+      {limitedFavorites.length === 0 ? (
         <p>No favorites yet.</p>
       ) : (
         <div className="favorites-container">
-          {favorites.map((favorite) => (
+          {limitedFavorites.map((favorite) => (
             <div key={favorite.id} className="favorite-item">
-              <img src={favorite._links.thumbnail.href} alt={favorite.title} />
               <div className="favorite-details">
                 <h2>{favorite.title}</h2>
                 <p>Artist: {favorite.slug}</p>

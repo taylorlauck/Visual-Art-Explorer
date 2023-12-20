@@ -20,7 +20,8 @@ const Login = ({ setIsLoggedIn }) => {
 
       if (response.status === 200) {
       
-       // localStorage.setItem('token', response.data.token);
+        localStorage.setItem('token', response.data.token);
+        localStorage.setItem('favorites', JSON.stringify(response.data.favorites));
         
         setIsLoggedIn(true);
       navigate('/'); // Redirect to the main page after signup

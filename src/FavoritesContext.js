@@ -6,23 +6,48 @@ export const FavoritesContext = createContext();
 export const FavoritesProvider = ({ children }) => {
   const [favorites, setFavorites] = useState([]); // TODO: on login, get favorites from db and set here
 
-  const addToFavorites = (artPiece) => {
-    setFavorites([...favorites, artPiece]);
-    return axios.post(
-        'http://localhost:4000/favorite',
-        {artworkId: artPiece.id},
-        {authorization: window.localStorage.getItem('token')}
-    );
+  const fetchFavorites = async () => {
+    try {
+      const response = await axios.get('http://localhost:4000/favorites', {
+        headers: {
+          Authorization: `Bearer ${window.localStorage.getItem('token')}`,
+        },
+      });
+      setFavorites(response.data.favorites); // Assuming your response contains an array of favorites
+    } catch (error) {
+      console.error('Error fetching favorites:', error);
+    }
   };
 
-  const removeFromFavorites = (artPieceId) => {
-    const updatedFavorites = favorites.filter((piece) => piece.id !== artPieceId);
-    setFavorites(updatedFavorites);
-    return axios.patch(
+  const addToFavorites = async (artPiece) => {
+    try {
+      setFavorites([...favorites, artPiece]);
+      await axios.post(
         'http://localhost:4000/favorite',
-        {artworkId: artPieceId},
-        {authorization: window.localStorage.getItem('token')}
-    );
+        { artworkId: artPiece.id },
+        {
+          headers: {
+            Authorization: `Bearer ${window.localStorage.getItem('token')}`,
+          },
+        }
+      );
+    } catch (error) {
+      console.error('Error adding to favorites:', error);
+    }
+  };
+
+  const removeFromFavorites = async (artPieceId) => {
+    try {
+      const updatedFavorites = favorites.filter((piece) => piece.id !== artPieceId);
+      setFavorites(updatedFavorites);
+      await axios.delete(`http://localhost:4000/favorite/${artPieceId}`, {
+        headers: {
+          Authorization: `Bearer ${window.localStorage.getItem('token')}`,
+        },
+      });
+    } catch (error) {
+      console.error('Error removing from favorites:', error);
+    }
   };
 
   return (
@@ -31,7 +56,7 @@ export const FavoritesProvider = ({ children }) => {
         favorites,
         addToFavorites,
         removeFromFavorites,
-        
+        fetchFavorites,
       }}
     >
       {children}
@@ -40,3 +65,5 @@ export const FavoritesProvider = ({ children }) => {
 };
 
 export default FavoritesContext;
+
+
