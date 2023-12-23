@@ -4,10 +4,10 @@ import './ArtDetailsModal.css'; // Import the CSS file
 
 
 const ArtDetailsModal = ({ artPiece, onClose, thumbnailUrl, onFavorite }) => {
- const { title, date, dimensions, medium, category, slug, additional_information } = artPiece;
+ const { id,title, date, dimensions, medium, category, slug, additional_information } = artPiece;
 
  const handleFavorite = () => {
-  onFavorite(artPiece); // Trigger the favorite action passed from the parent component
+  onFavorite({ ...artPiece, id }); // Trigger the favorite action passed from the parent component
 };
 
   return (

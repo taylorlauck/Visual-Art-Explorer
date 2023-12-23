@@ -1,38 +1,33 @@
 //FavoritesPage.js
-
 import React, { useContext, useEffect } from 'react';
 import { FavoritesContext } from './FavoritesContext';
-
+//<p>Artwork ID: {favorite.artworkid}</p> {/* Display Artwork ID */}
 const FavoritesPage = () => {
   const { favorites, removeFromFavorites, fetchFavorites } = useContext(FavoritesContext);
 
-  const handleUnfavorite = (artPieceId) => {
-    removeFromFavorites(artPieceId);
-    fetchFavorites();
+  const handleUnfavorite = (artworkid) => {
+    removeFromFavorites(artworkid); // Remove art from favorites using context action
   };
 
   useEffect(() => {
-    fetchFavorites();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);//fetchFavorites
-
-  // Limit favorites to the first 20 items
-  const limitedFavorites = favorites.slice(0, 20);
+    fetchFavorites(); // Fetch favorites when the component mounts
+  }, []); // Empty dependency array to execute once
 
   return (
     <div>
       <h1>Favorites</h1>
-      {limitedFavorites.length === 0 ? (
+      {favorites.length === 0 ? (
         <p>No favorites yet.</p>
       ) : (
         <div className="favorites-container">
-          {limitedFavorites.map((favorite) => (
+          {favorites.map((favorite) => (
             <div key={favorite.id} className="favorite-item">
               <div className="favorite-details">
-                <h2>{favorite.title}</h2>
-                <p>Artist: {favorite.slug}</p>
-                {/* Add other details you want to display */}
-                <button onClick={() => handleUnfavorite(favorite.id)}>Unfavorite</button>
+                <p>{favorite.title}</p>
+                <p> {favorite.slug}</p>
+               
+                {/* Assuming you have a button to unfavorite */}
+                <button onClick={() => handleUnfavorite(favorite.artworkid)}>Unfavorite</button>
               </div>
             </div>
           ))}
@@ -43,6 +38,3 @@ const FavoritesPage = () => {
 };
 
 export default FavoritesPage;
-
-
-

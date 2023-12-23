@@ -1,10 +1,10 @@
 import axios from 'axios';
-import React, { createContext, useState } from 'react';
+import React, { createContext, useState, useEffect } from 'react';
 
 export const FavoritesContext = createContext();
 
 export const FavoritesProvider = ({ children }) => {
-  const [favorites, setFavorites] = useState([]); // TODO: on login, get favorites from db and set here
+  const [favorites, setFavorites] = useState([]);
 
   const fetchFavorites = async () => {
     try {
@@ -19,12 +19,13 @@ export const FavoritesProvider = ({ children }) => {
     }
   };
 
+
   const addToFavorites = async (artPiece) => {
     try {
       setFavorites([...favorites, artPiece]);
       await axios.post(
         'http://localhost:4000/favorite',
-        { artworkId: artPiece.id },
+        { artworkId: artPiece.id, title: artPiece.title, slug: artPiece.slug, image: artPiece.thumbnailUrl }, // Include artworkId, slug, and thumbnailUrl (image)
         {
           headers: {
             Authorization: `Bearer ${window.localStorage.getItem('token')}`,
@@ -36,19 +37,34 @@ export const FavoritesProvider = ({ children }) => {
     }
   };
 
-  const removeFromFavorites = async (artPieceId) => {
+
+
+  const removeFromFavorites = async (artworkid) => {
     try {
-      const updatedFavorites = favorites.filter((piece) => piece.id !== artPieceId);
-      setFavorites(updatedFavorites);
-      await axios.delete(`http://localhost:4000/favorite/${artPieceId}`, {
-        headers: {
+      await axios.delete(`http://localhost:4000/favorites/${artworkid}`, {
+      headers: {
           Authorization: `Bearer ${window.localStorage.getItem('token')}`,
         },
-      });
+        data: { artworkid }, // Send artworkId in the request body
+    });
+      // Other logic after successful deletion
+      //setFavorites((prevFavorites) =>
+       // prevFavorites.filter((favorite) => favorite.artPiece !== artPiece)
+     // );
     } catch (error) {
       console.error('Error removing from favorites:', error);
     }
   };
+  
+  
+  
+  
+  
+
+
+  useEffect(() => {
+    fetchFavorites();
+  }, []); // Fetch favorites when the component mounts
 
   return (
     <FavoritesContext.Provider
@@ -64,6 +80,12 @@ export const FavoritesProvider = ({ children }) => {
   );
 };
 
+
 export default FavoritesContext;
+
+
+
+
+
 
 

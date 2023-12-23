@@ -12,7 +12,7 @@ const Artworks = () => {
 
   //const navigate = useNavigate(); // Initialize useNavigate
   const { addToFavorites } = useContext(FavoritesContext); // Access favorites context action
-
+ const {removeFromFavorites} = useContext(FavoritesContext);
  
 
 
@@ -76,6 +76,13 @@ const Artworks = () => {
   const handleFavorite = (artPiece) => {
     addToFavorites(artPiece); // Add art to favorites using context action
   };
+
+const handleUnfavorite = (artworkId) => {
+ // Extract the artwork ID
+  removeFromFavorites(artworkId);
+  // Other logic
+};
+
   return (
     <div className="Artworks">
       <div>
@@ -98,7 +105,7 @@ const Artworks = () => {
           onClose={closeArtDetails}
           thumbnailUrl={selectedArtwork._links.thumbnail.href} // Pass the thumbnail URL as a prop
           onFavorite={handleFavorite} // Pass the handleFavorite function
-
+          removeFromFavorites={handleUnfavorite}
         />
       )}
     </div>
