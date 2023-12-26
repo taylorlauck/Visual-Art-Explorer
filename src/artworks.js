@@ -86,7 +86,9 @@ const handleUnfavorite = (artworkId) => {
   return (
     <div className="Artworks">
       <div>
-        <h1>Welcome to the gallery! Click on some art to find out more about it!</h1>
+      <div className="box">
+        <h1>Welcome to The Gallery! Click on some art to find out more about it!</h1>
+        </div>
         <div className="art-container-horizontal">
           {artworks.map((artwork) => (
             <div key={artwork.id} className="art-piece-horizontal" onClick={() => showArtDetails(artwork)}>
@@ -113,10 +115,3 @@ const handleUnfavorite = (artworkId) => {
 };
 
 export default Artworks;
-
-
-
-
-
-
-

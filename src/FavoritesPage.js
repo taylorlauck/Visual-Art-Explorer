@@ -25,7 +25,9 @@ const FavoritesPage = () => {
               <div className="favorite-details">
                 <p>{favorite.title}</p>
                 <p> {favorite.slug}</p>
-               
+                {favorite.image_url && (
+                  <img src={favorite.thumbnailUrl} alt={favorite.title} /> // Displaying the image
+                )}
                 {/* Assuming you have a button to unfavorite */}
                 <button onClick={() => handleUnfavorite(favorite.artworkid)}>Unfavorite</button>
               </div>

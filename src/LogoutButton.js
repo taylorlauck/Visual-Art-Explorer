@@ -8,12 +8,17 @@ const LogoutButton = ({ setIsLoggedIn }) => {
     setIsLoggedIn(false); // Update the login status to false upon logout
   };
 
-  return (
-    <button onClick={handleLogout}>Logout</button>
-  );
+  if (typeof document !== 'undefined') {
+    // Render the button only in a browser environment
+    return <button onClick={handleLogout}>Logout</button>;
+  } else {
+    // Handle the case where the component is not rendered in a browser environment
+    return null;
+  }
 };
 
 export default LogoutButton;
+
 
 
 

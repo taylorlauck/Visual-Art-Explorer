@@ -1,4 +1,7 @@
 import axios from 'axios';
+
+
+
 import React, { createContext, useState, useEffect } from 'react';
 
 export const FavoritesContext = createContext();
@@ -22,10 +25,10 @@ export const FavoritesProvider = ({ children }) => {
 
   const addToFavorites = async (artPiece) => {
     try {
-      setFavorites([...favorites, artPiece]);
+      setFavorites([...favorites, artPiece, ]);
       await axios.post(
         'http://localhost:4000/favorite',
-        { artworkId: artPiece.id, title: artPiece.title, slug: artPiece.slug, image: artPiece.thumbnailUrl }, // Include artworkId, slug, and thumbnailUrl (image)
+        { artworkId: artPiece.id,  slug: artPiece.slug, }, // Include artworkId, slug, and thumbnailUrl (image)
         {
           headers: {
             Authorization: `Bearer ${window.localStorage.getItem('token')}`,
@@ -82,10 +85,3 @@ export const FavoritesProvider = ({ children }) => {
 
 
 export default FavoritesContext;
-
-
-
-
-
-
-
