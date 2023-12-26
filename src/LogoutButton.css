@@ -1,0 +1,10 @@
+/* LogoutButton.css */
+.logout-button {
+    /* Add desired styles for the button */
+    padding: 8px 16px;
+    background-color: #f00; /* Example background color */
+    color: #fff; /* Example text color */
+    border: none;
+    cursor: pointer;
+  }
+  
